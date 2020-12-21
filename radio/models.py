@@ -226,7 +226,7 @@ class Transmission(models.Model):
         return '{:02d}:{:02d}'.format(m,s)
 
     def freq_mhz(self):
-        return '{0:07.3f}'.format(self.freq / 1000000)
+        return '{0:11.6f}'.format(self.freq / 1000000)
 
     def tg_name(self):
         """Returns TalkGroup name used for page title
