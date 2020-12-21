@@ -60,7 +60,7 @@
 		<div class="col-xs-6">{{ object.emergency }}</div>
 		<div class="col-xs-4"></div>
 	</div>
-	{% for u in object.units.all %}
+	{% for u in object.units.all reversed %}
 	<div class="row">
 		<div class="col-xs-1"></div>
 		<div class="col-xs-2"><strong>Unit</strong></div>
