@@ -355,6 +355,7 @@ class TalkGroupFilterViewSet(generics.ListAPIView):
         search_tgs = re.split('[\+]', tg_var)
         q = Q()
         for stg in search_tgs:
+            q |= Q(dec_id__iexact=stg)
             q |= Q(common_name__iexact=stg)
             q |= Q(slug__iexact=stg)
         tg = TalkGroup.objects.filter(q)
