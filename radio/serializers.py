@@ -13,7 +13,7 @@ class TalkGroupSerializer(serializers.HyperlinkedModelSerializer):
 class UnitListField(serializers.RelatedField):
 
     def to_representation(self, value):
-        return { "pk": value.pk, "dec_id": value.dec_id, "description": value.description }
+        return { "pk": value.pk, "dec_id": value.dec_id, "description": value.description, "slug": value.slug }
 
 class TransmissionSerializer(serializers.ModelSerializer):
     talkgroup_info = TalkGroupSerializer()

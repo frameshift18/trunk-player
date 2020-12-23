@@ -373,6 +373,7 @@ class UnitFilterViewSet(generics.ListAPIView):
         search_unit = re.split('[\+]', unit_var)
         q = Q()
         for s_unit in search_unit:
+            q |= Q(dec_id__iexact=s_unit)
             q |= Q(slug__iexact=s_unit)
         units = Unit.objects.filter(q)
         rc_data = Transmission.objects.filter(units__in=units).filter(talkgroup_info__public=True).prefetch_related('units').distinct()
