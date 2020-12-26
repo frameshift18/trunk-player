@@ -56,8 +56,15 @@ def import_tg_file(self, options):
             try:
                 if truncate:
                     if len(row[2]) > mode_max_length:
+                      before = row[2]
+                      ''' Truncate DE to E and De to D '''
+                      if row[2] == "DE":
+                        row[2] = "E"
+                      if row[2] == "De":
+                        row[2] = "D"
                       row[2] = row[2][:mode_max_length]
-                      self.stdout.write("Truncating mode from line ({}) TG {}".format(line_number, row[3]))
+                      after = row[2]
+                      self.stdout.write("Truncating mode from line ({}) TG ({}) from {} to {}".format(line_number, row[3], before, after))
                     if len(row[3]) > alpha_tag_max_length:
                       row[3] = row[3][:alpha_tag_max_length]
                       self.stdout.write("Truncating alpha_tag from line ({}) TG {}".format(line_number, row[3]))
@@ -65,15 +72,15 @@ def import_tg_file(self, options):
                       row[4] = row[4][:description_max_length]
                       self.stdout.write("Truncating description from line ({}) TG {}".format(line_number, row[3]))
                 #print('LEN ' + str(len(row)))
-                priority = 3
+                priority = 1
                 try:
-                    priority = row[6]
+                    priority = row[7]
                 except IndexError:
                     pass
                 try:
                     priority = int(priority)
                 except ValueError:
-                    priority = 3
+                    priority = 1
                 obj, create = TalkGroup.objects.update_or_create(dec_id=row[0], system=system, defaults={'mode': row[2], 'alpha_tag': row[3], 'description': row[4], 'priority': priority})
                 obj.service_type = row[5][:20]
                 obj.save()
